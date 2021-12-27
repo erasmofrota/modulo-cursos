@@ -1,15 +1,15 @@
 <template>
-    <div class="article-item">
-        <router-link :to="{ name: 'articleById', params: { id: article.id } }">
-            <div class="article-item-image d-none d-sm-block">
-                <img v-if="article.imageUrl" :src="article.imageUrl" height="150" width="150" alt="Article">
-                <img v-else src="@/assets/article.png" height="150" width="150" alt="Article">
+    <div class="course-item">
+        <router-link :to="{ name: 'courseById', params: { id: course.id } }">
+            <div class="course-item-image d-none d-sm-block">
+                <img v-if="course.imageUrl" :src="course.imageUrl" height="150" width="150" alt="Course">
+                <img v-else src="@/assets/course.png" height="150" width="150" alt="Course">
             </div>
-            <div class="article-item-info">
-                <h2>{{ article.name}}</h2>
-                <p>{{ article.description }}</p>
-                <span class="article-item-author">
-                    <strong>Autor: </strong>{{ article.author }}
+            <div class="course-item-info">
+                <h2>{{ course.name}}</h2>
+                <p>{{ course.description }}</p>
+                <span class="course-item-author">
+                    <strong>Autor: </strong>{{ course.author }}
                 </span>
             </div>
         </router-link>
@@ -18,14 +18,14 @@
 
 <script>
 export default {
-    name: 'ArticlesItem',
-    props: ['article']
+    name: 'CoursesItem',
+    props: ['course']
 
 }
 </script>
 
 <style>
-    .article-item {
+    .course-item {
         border-radius: 8px;
         margin-bottom: 20px;
         background-color: #FFF;
@@ -34,30 +34,30 @@ export default {
         box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15);
     }
 
-    .article-item a {
+    .course-item a {
         display: flex;
         align-items: flex-start;
         text-decoration: none;
         color: #000;
     }
-    .article-item-info h2 {
+    .course-item-info h2 {
         font-size: 1.7rem;
     }
-    .article-item-image {
+    .course-item-image {
         padding-right: 20px;
         margin-right: 20px;
         border-right: 1px solid #AAA;
     }
-    .article-item-image img {
+    .course-item-image img {
         border-radius: 5px;
     }
 
-    .article-item-info {
+    .course-item-info {
         display: flex;
         align-self: stretch;
         flex-direction: column;
     }
-    .article-item-info p {
+    .course-item-info p {
         flex: 1;
         color: #555;
         font-size: 1.1rem;

@@ -4,8 +4,8 @@
         <div class="admin-pages-tabs">
             <b-card no-body>
                 <b-tabs card>
-                    <b-tab title="Artigos" active>
-                        <ArticleAdmin />
+                    <b-tab title="Cursos" active>
+                        <CourseAdmin />
                     </b-tab>
                     <b-tab title="Categorias">
                         <CategoryAdmin />
@@ -21,13 +21,13 @@
 
 <script>
 import PageTitle from '@/components/template/PageTitle'
-import ArticleAdmin from './ArticleAdmin'
+import CourseAdmin from './CourseAdmin'
 import CategoryAdmin from './CategoryAdmin'
 import UserAdmin from './UserAdmin'
 
 export default {
     name: 'AdminPages',
-    components: { PageTitle, ArticleAdmin, CategoryAdmin, UserAdmin }
+    components: { PageTitle, CourseAdmin, CategoryAdmin, UserAdmin }
 
 }
 </script>

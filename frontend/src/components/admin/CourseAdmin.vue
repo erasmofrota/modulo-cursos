@@ -1,24 +1,24 @@
 <template>
-    <div class="article-admin">
+    <div class="course-admin">
         <b-form>
-            <input id="article-id" type="hidden" v-model="article.id" />
-            <b-form-group label="Nome do Artigo: " label-for="article-name">
-                <b-form-input id="article-name" type="text" v-model="article.name" required :readonly="mode === 'remove'" placeholder="Informe o Nome do Artigo..." />
+            <input id="course-id" type="hidden" v-model="course.id" />
+            <b-form-group label="Nome do Curso: " label-for="course-name">
+                <b-form-input id="course-name" type="text" v-model="course.name" required :readonly="mode === 'remove'" placeholder="Informe o Nome do Curso..." />
             </b-form-group>
-            <b-form-group label="Descrição: " label-for="article-description">
-                <b-form-input id="article-description" type="text" v-model="article.description" required :readonly="mode === 'remove'" placeholder="Informe o Nome do Artigo..." />
+            <b-form-group label="Descrição: " label-for="course-description">
+                <b-form-input id="course-description" type="text" v-model="course.description" required :readonly="mode === 'remove'" placeholder="Informe o Nome do Curso..." />
             </b-form-group>
-            <b-form-group v-if="mode === 'save'" label="Imagem (URL): " label-for="article-imageUrl">
-                <b-form-input id="article-imageUrl" type="text" v-model="article.imageUrl"  placeholder="Informe a URL da imagem do Artigo..." />
+            <b-form-group v-if="mode === 'save'" label="Imagem (URL): " label-for="course-imageUrl">
+                <b-form-input id="course-imageUrl" type="text" v-model="course.imageUrl"  placeholder="Informe a URL da imagem do Curso..." />
             </b-form-group>
-            <b-form-group v-if="mode === 'save'" label="Categoria: " label-for="article-categoryId">
-                <b-form-select id="article-categoryId" :options="categories" v-model="article.categoryId" />
+            <b-form-group v-if="mode === 'save'" label="Categoria: " label-for="course-categoryId">
+                <b-form-select id="course-categoryId" :options="categories" v-model="course.categoryId" />
             </b-form-group>
-            <b-form-group v-if="mode === 'save'" label="Autor: " label-for="article-userId">
-                <b-form-select id="article-userId" :options="users" v-model="article.userId" />
+            <b-form-group v-if="mode === 'save'" label="Autor: " label-for="course-userId">
+                <b-form-select id="course-userId" :options="users" v-model="course.userId" />
             </b-form-group>
-            <b-form-group label="Conteúdo:" label-for="article-content" v-if="mode === 'save'">
-                <VueEditor v-model="article.content" placeholder="Informe o Conteúdo do Artigo..." />
+            <b-form-group label="Conteúdo:" label-for="course-content" v-if="mode === 'save'">
+                <VueEditor v-model="course.content" placeholder="Informe o Conteúdo do Curso..." />
             </b-form-group>
             <b-button variant="primary" v-if="mode === 'save'"
                 @click="save">Salvar</b-button>
@@ -27,12 +27,12 @@
             <b-button class="ml-2" @click="reset">Cancelar</b-button>
         </b-form>
         <hr>
-        <b-table hover striped :items="articles" :fields="fields">
+        <b-table hover striped :items="courses" :fields="fields">
             <template slot="actions" slot-scope="data">
-                <b-button variant="warning" @click="loadArticle(data.item)" class="mr-2">
+                <b-button variant="warning" @click="loadCourse(data.item)" class="mr-2">
                     <i class="fa fa-pencil"></i>
                 </b-button>
-                <b-button variant="danger" @click="loadArticle(data.item, 'remove')">
+                <b-button variant="danger" @click="loadCourse(data.item, 'remove')">
                     <i class="fa fa-trash"></i>
                 </b-button>
             </template>
@@ -47,13 +47,13 @@ import { baseApiUrl, showError } from '@/global'
 import axios from 'axios'
 
 export default {
-    name: 'ArticleAdmin',
+    name: 'CourseAdmin',
     components: { VueEditor },
     data: function() {
         return {
             mode: 'save',
-            article: {},
-            articles: [],
+            course: {},
+            courses: [],
             categories: [],
             users: [],
             page: 1,
@@ -68,23 +68,23 @@ export default {
         }
     },
     methods: {
-        loadArticles() {
-            const url = `${baseApiUrl}/articles?page=${this.page}`
+        loadCourses() {
+            const url = `${baseApiUrl}/courses?page=${this.page}`
             axios.get(url).then(res => {
-                this.articles = res.data.data
+                this.courses = res.data.data
                 this.count = res.data.count
                 this.limit = res.data.limit
             })
         },
         reset() {
             this.mode = 'save'
-            this.article = {}
-            this.loadArticles()
+            this.course = {}
+            this.loadCourses()
         },
         save() {
-            const method = this.article.id ? 'put' : 'post'
-            const id = this.article.id ? `/${this.article.id}` : ''
-            axios[method](`${baseApiUrl}/articles${id}`, this.article)
+            const method = this.course.id ? 'put' : 'post'
+            const id = this.course.id ? `/${this.course.id}` : ''
+            axios[method](`${baseApiUrl}/courses${id}`, this.course)
                 .then(() => {
                     this.$toasted.global.defaultSuccess()
                     this.reset()
@@ -93,18 +93,18 @@ export default {
 
         },
         remove() {
-            const id = this.article.id
-            axios.delete(`${baseApiUrl}/articles/${id}`)
+            const id = this.course.id
+            axios.delete(`${baseApiUrl}/courses/${id}`)
                 .then(() => {
                     this.$toasted.global.defaultSuccess()
                     this.reset()
                 })
                 .catch(showError)
         },
-        loadArticle(article, mode = 'save') {
+        loadCourse(course, mode = 'save') {
             this.mode = mode
-            axios.get(`${baseApiUrl}/articles/${article.id}`)
-                .then(res => this.article = res.data)
+            axios.get(`${baseApiUrl}/courses/${course.id}`)
+                .then(res => this.course = res.data)
         },
         loadCategories() {
             const url = `${baseApiUrl}/categories`
@@ -125,14 +125,14 @@ export default {
     },
     watch: {
         page() {
-            this.loadArticles()
+            this.loadCourses()
         }
     },
 
     mounted() {
         this.loadUsers()
         this.loadCategories()
-        this.loadArticles()
+        this.loadCourses()
     }
 }
 </script>

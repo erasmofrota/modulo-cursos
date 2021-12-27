@@ -1,6 +1,6 @@
 <template>
     <footer class="footer">
-        <span>Copyright - <strong>Cod3r</strong> ©2019</span>
+        <span>Copyright - <strong>UECE</strong> ©2021</span>
     </footer>
 </template>
 

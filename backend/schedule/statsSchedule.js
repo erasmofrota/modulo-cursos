@@ -4,7 +4,7 @@ module.exports = app => {
     schedule.scheduleJob('*/1 * * * *', async function() {
         const usersCount = await app.db('users').count('id').first()
         const categoriesCount = await app.db('categories').count('id').first()
-        const articlesCount = await app.db('articles').count('id').first()
+        const coursesCount = await app.db('courses').count('id').first()
 
         const { Stat } = app.api.stat
 
@@ -14,15 +14,15 @@ module.exports = app => {
         const  stat = new Stat({
             users: usersCount.count,
             categories: categoriesCount.count,
-            articles: articlesCount.count,
+            courses: coursesCount.count,
             createdAt: new Date()
         })
 
         const changeUsers = !lastStat || stat.users !== lastStat.users
         const changeCategories = !lastStat || stat.categories !== lastStat.categories
-        const changeArticles = !lastStat || stat.articles !== lastStat.articles
+        const changecourses = !lastStat || stat.courses !== lastStat.courses
 
-        if (changeUsers || changeCategories || changeArticles) {
+        if (changeUsers || changeCategories || changecourses) {
             stat.save().then(() => console.log('[Stats] Estatísticas atualizadas!'))
         }
 

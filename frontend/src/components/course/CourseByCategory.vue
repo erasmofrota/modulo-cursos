@@ -1,14 +1,14 @@
 <template>
-    <div class="articles-by-category">
+    <div class="courses-by-category">
         <PageTitle icon="fa fa-folder-o" 
             :main="category.name" sub="Categoria" />
             <ul>
-                <li v-for="article in articles" :key="article.id">
-                    <ArticleItem :article='article'/>
+                <li v-for="course in courses" :key="course.id">
+                    <CourseItem :course='course'/>
                 </li>
             </ul>
             <div class="load-more">
-                <button v-if="loadMore" class="btn btn-lg btn-outline-primary" @click="getArticles">Carregar Mais Artigos...</button>
+                <button v-if="loadMore" class="btn btn-lg btn-outline-primary" @click="getCourses">Carregar Mais Cursos...</button>
             </div>
     </div>
 </template>
@@ -17,15 +17,15 @@
 import { baseApiUrl } from '@/global'
 import axios from 'axios'
 import PageTitle from '@/components/template/PageTitle'
-import ArticleItem from './ArticleItem'
+import CourseItem from './CourseItem'
 
 export default {
-    name: 'ArticlesByCategory',
-    components: { PageTitle, ArticleItem },
+    name: 'CoursesByCategory',
+    components: { PageTitle, CourseItem },
     data: function() {
         return {
             category: {},
-            articles: [],
+            courses: [],
             page: 1,
             loadMore: true
         }
@@ -35,10 +35,10 @@ export default {
             const url = `${baseApiUrl}/categories/${this.category.id}`
             axios(url).then(res => this.category = res.data)
         }, 
-        getArticles() {
-            const url = `${baseApiUrl}/categories/${this.category.id}/articles?page=${this.page}`
+        getCourses() {
+            const url = `${baseApiUrl}/categories/${this.category.id}/courses?page=${this.page}`
             axios(url).then(res => {
-                this.articles = this.articles.concat(res.data)
+                this.courses = this.courses.concat(res.data)
                 this.page++
 
                 if(res.data.length === 0) this.loadMore = false
@@ -48,30 +48,30 @@ export default {
     watch: {
         $route(to) {
             this.category.id = to.params.id
-            this.articles = []
+            this.courses = []
             this.page = 1
             this.loadMore = true
 
             this.getCategory()
-            this.getArticles()
+            this.getCourses()
         }
     },
     mounted() {
         this.category.id = this.$route.params.id
         this.getCategory()
-        this.getArticles()
+        this.getCourses()
     }
 
 }
 </script>
 
 <style>
-    .articles-by-category ul {
+    .courses-by-category ul {
         list-style-type: none;
         padding: 0px;
     }
 
-    .articles-by-category .load-more {
+    .courses-by-category .load-more {
         display: flex;
         flex-direction: column;
         align-items: center;

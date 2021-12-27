@@ -69,9 +69,9 @@ module.exports = app => {
 
     const remove = async (req, res) => {
         try {
-            const articles = await app.db('articles')
+            const courses = await app.db('courses')
                 .where({ userId: req.params.id })
-            notExistsOrError(articles, 'Usuário possui artigos.')
+            notExistsOrError(courses, 'Usuário possui curso.')
 
             const rowsUpdated = await app.db('users')
                 .update({deletedAt: new Date()})
