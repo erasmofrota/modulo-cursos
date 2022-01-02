@@ -1,6 +1,6 @@
 <template>
 	<div id="app" :class="{'hide-menu': !isMenuVisible || !user}">
-		<Header title="Cod3r - Base de Conhecimento" 
+		<Header title="Módulo de Cursos" 
 		:hideToggle="!user" 
 		:hideUserDropdown="!user" />
 		<Menu v-if="user" />
